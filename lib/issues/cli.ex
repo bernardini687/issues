@@ -8,7 +8,9 @@ defmodule Issues.CLI do
   @default_count 4
 
   def run(argv) do
-    parse_argv(argv)
+    argv
+    |> parse_argv()
+    |> process()
   end
 
   @doc """
@@ -30,5 +32,13 @@ defmodule Issues.CLI do
       {_, [user, repo], _} -> {user, repo, @default_count}
       _ -> :help
     end
+  end
+
+  @doc """
+  process the parsed argv
+  """
+  def process(:help) do
+    IO.puts("usage: issues <user> <project> [count | #{@default_count}]")
+    System.halt(0)
   end
 end

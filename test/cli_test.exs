@@ -1,7 +1,7 @@
 defmodule CliTest do
   use ExUnit.Case
 
-  import Issues.CLI, only: [parse_argv: 1]
+  import Issues.CLI, only: [parse_argv: 1, run: 1]
 
   test "returns :help if given -h or --help options" do
     assert parse_argv(["-h", "foo"]) == :help
@@ -14,5 +14,9 @@ defmodule CliTest do
 
   test "defaults count if given two options" do
     assert parse_argv([?a, ?b]) == {?a, ?b, 4}
+  end
+
+  test "returns usage details if misused" do
+    assert run(["-h"]) == :not_ok
   end
 end
