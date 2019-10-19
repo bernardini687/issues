@@ -9,7 +9,7 @@ defmodule CliTest do
   end
 
   test "returns three values if given three options" do
-    assert parse_argv([?a, ?b, "4"]) == {?a, ?b, 4}
+    assert parse_argv([?a, ?b, "3"]) == {?a, ?b, 3}
   end
 
   test "defaults count if given two options" do
