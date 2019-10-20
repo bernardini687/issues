@@ -47,4 +47,8 @@ defmodule Issues.CLI do
     IO.puts("usage: issues <user> <project> [count | #{@default_count}]")
     System.halt(0)
   end
+
+  def process({user, repo, _count}) do
+    Issues.GitHubIssues.fetch(user, repo)
+  end
 end
