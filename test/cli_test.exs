@@ -1,7 +1,9 @@
 defmodule CLITest do
   use ExUnit.Case
 
-  import Issues.CLI, only: [parse_argv: 1, sort_by_ascending_order: 1]
+  import Issues.CLI, only: [parse_argv: 1,
+                            sort_by_ascending_order: 1,
+                            process: 1]
 
   test "returns :help if given -h or --help options" do
     assert parse_argv(["-h", "foo"]) == :help
@@ -24,7 +26,14 @@ defmodule CLITest do
 
     issues = for issue <- result, do: issue[:created_at]
 
-    assert issues == ~w{a b c}
+    assert issues == ~w[a b c]
+  end
+
+  @tag :skip
+  test "successful process" do
+    issues = process({"christopheradams", "elixir_style_guide", 3})
+
+    assert length(issues) == 3
   end
 
   defp fake_created_at_list(values) do

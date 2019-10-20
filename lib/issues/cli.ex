@@ -45,10 +45,11 @@ defmodule Issues.CLI do
     System.halt(0)
   end
 
-  def process({user, repo, _count}) do
+  def process({user, repo, count}) do
     Issues.GitHubIssues.fetch(user, repo)
     |> decode_response()
     |> sort_by_ascending_order()
+    |> Enum.take(count)
   end
 
   def decode_response({:ok, body}), do: body
