@@ -40,9 +40,6 @@ defmodule Issues.CLI do
     end
   end
 
-  @doc """
-  process the parsed argv
-  """
   def process(:help) do
     IO.puts("usage: issues <user> <project> [count | #{@default_count}]")
     System.halt(0)
@@ -51,6 +48,7 @@ defmodule Issues.CLI do
   def process({user, repo, _count}) do
     Issues.GitHubIssues.fetch(user, repo)
     |> decode_response()
+    |> sort_by_ascending_order()
   end
 
   def decode_response({:ok, body}), do: body
@@ -58,5 +56,9 @@ defmodule Issues.CLI do
   def decode_response({:error, details}) do
     IO.puts("error along fetching process: `#{details}`")
     System.halt(2)
+  end
+
+  def sort_by_ascending_order(issues) do
+    Enum.sort(issues, &(&1[:created_at] <= &2[:created_at]))
   end
 end
