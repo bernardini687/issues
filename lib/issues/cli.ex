@@ -27,9 +27,15 @@ defmodule Issues.CLI do
     )
 
     case parse do
-      {[help: true], _, _} -> :help
-      {_, [user, repo, count], _} -> {user, repo, String.to_integer(count)}
-      {_, [user, repo], _} -> {user, repo, @default_count}
+      {[help: true], _, _}
+        -> :help
+
+      {_, [user, repo, count], _}
+        -> {user, repo, String.to_integer(count)}
+
+      {_, [user, repo], _}
+        -> {user, repo, @default_count}
+
       _ -> :help
     end
   end

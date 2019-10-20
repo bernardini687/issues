@@ -1,4 +1,4 @@
-defmodule CliTest do
+defmodule CLITest do
   use ExUnit.Case
 
   import Issues.CLI, only: [parse_argv: 1, run: 1]
