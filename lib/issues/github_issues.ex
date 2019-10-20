@@ -12,7 +12,7 @@ defmodule Issues.GitHubIssues do
   end
 
   def handle_response({:ok, %{body: body}}) do
-    case Jason.decode(body) do
+    case Jason.decode(body, keys: :atoms) do
       {:ok, body}
         -> {:ok, body}
 
@@ -21,7 +21,7 @@ defmodule Issues.GitHubIssues do
     end
   end
 
-  def handle_response({:error, %{reason: reason}}) do
-    {:error, reason}
+  def handle_response({:error, %{reason: details}}) do
+    {:error, details}
   end
 end
