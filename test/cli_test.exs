@@ -1,6 +1,7 @@
 defmodule CLITest do
   use ExUnit.Case
 
+  import ExUnit.CaptureIO, only: [capture_io: 1]
   import Issues.CLI, only: [parse_argv: 1,
                             sort_by_ascending_order: 1,
                             process: 1]
@@ -16,6 +17,10 @@ defmodule CLITest do
 
   test "defaults count if given two options" do
     assert parse_argv([?a, ?b]) == {?a, ?b, 4}
+  end
+
+  test "outputs help" do
+    assert capture_io(fn -> process(:help) end) == "usage: issues <user> <project> [count | 4]\n"
   end
 
   test "sort_by_ascending_orders/1" do
