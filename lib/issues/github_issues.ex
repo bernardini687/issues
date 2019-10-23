@@ -18,11 +18,11 @@ defmodule Issues.GitHubIssues do
 
   def handle_response({:ok, %{body: body}}) do
     case Jason.decode(body, keys: :atoms) do
-      {:ok, body}
-        -> {:ok, body}
+      {:ok, body} ->
+        {:ok, body}
 
-      {:error, details}
-        -> {:error, "Jason failed to compile `#{details.data}`"}
+      {:error, details} ->
+        {:error, "Jason failed to compile `#{details.data}`"}
     end
   end
 

@@ -20,23 +20,25 @@ defmodule Issues.CLI do
   number of entries to format, which returns `{user, repository, count}`.
   """
   def parse_argv(argv) do
-    parse = OptionParser.parse(
-      argv,
-      alias: [h: :help],
-      strict: [help: :boolean]
-    )
+    parse =
+      OptionParser.parse(
+        argv,
+        alias: [h: :help],
+        strict: [help: :boolean]
+      )
 
     case parse do
-      {[help: true], _, _}
-        -> :help
+      {[help: true], _, _} ->
+        :help
 
-      {_, [user, repo, count], _}
-        -> {user, repo, String.to_integer(count)}
+      {_, [user, repo, count], _} ->
+        {user, repo, String.to_integer(count)}
 
-      {_, [user, repo], _}
-        -> {user, repo, @default_count}
+      {_, [user, repo], _} ->
+        {user, repo, @default_count}
 
-      _ -> :help
+      _ ->
+        :help
     end
   end
 
