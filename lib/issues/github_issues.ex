@@ -1,4 +1,8 @@
 defmodule Issues.GitHubIssues do
+  @moduledoc """
+  Handles the request to the GitHub API.
+  """
+
   @github_url Application.get_env(:issues, :github_url)
   @user_agent [{"User-Agent", "bernardini687/issues"}]
 

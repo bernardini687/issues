@@ -1,8 +1,8 @@
 defmodule Issues.CLI do
   @moduledoc """
-  handle the command line parsing and the dispatch to
+  Handle the command line parsing and the dispatch to
   the various functions that end up generating a
-  table of the last `n` issues in a github repository
+  table of the last `n` issues in a github repository.
   """
 
   @default_count 4
@@ -14,10 +14,10 @@ defmodule Issues.CLI do
   end
 
   @doc """
-  `argv` can hold -h or --help, which returns `:help`
+  `argv` can hold -h or --help, which returns `:help`.
 
-  otherwise it is a github user name, repository name, and an optional
-  number of entries to format, which returns `{user, repository, count}`
+  Otherwise it is a github user name, repository name, and an optional
+  number of entries to format, which returns `{user, repository, count}`.
   """
   def parse_argv(argv) do
     parse = OptionParser.parse(
