@@ -5,23 +5,21 @@ defmodule TableFormatterTest do
 
   alias Issues.TableFormatter, as: TF
 
-  def sample_data do
-    [
-      [c1: "r1_c1", c2: "r1_c2", c3: "r1_c3", c4: "r1___c4"],
-      [c1: "r2_c1", c2: "r2_c2", c3: "r2_c3", c4: "r2_c4"],
-      [c1: "r3_c1", c2: "r3_c2", c3: "r3_c3", c4: "r3_c4"],
-      [c1: "r4_c1", c2: "r4__c2", c3: "r4_c3", c4: "r4_c4"]
-    ]
-  end
+  @sample_data [
+    [c1: "r1_c1", c2: "r1_c2", c3: "r1_c3", c4: "r1___c4"],
+    [c1: "r2_c1", c2: "r2_c2", c3: "r2_c3", c4: "r2_c4"],
+    [c1: "r3_c1", c2: "r3_c2", c3: "r3_c3", c4: "r3_c4"],
+    [c1: "r4_c1", c2: "r4__c2", c3: "r4_c3", c4: "r4_c4"]
+  ]
 
-  def headers, do: [:c1, :c2, :c4]
+  @headers ~w(c1 c2 c4)a
 
-  def split_in_three_columns, do: TF.split_into_columns(sample_data(), headers())
+  def split_in_three_columns, do: TF.split_into_columns(@sample_data, @headers)
 
   test "TableFormatter.split_into_columns/2" do
     columns = split_in_three_columns()
 
-    assert length(columns) == length(headers())
+    assert length(columns) == length(@headers)
     assert List.first(columns) == ~w(r1_c1 r2_c1 r3_c1 r4_c1)
     assert List.last(columns) == ~w(r1___c4 r2_c4 r3_c4 r4_c4)
   end
@@ -37,7 +35,7 @@ defmodule TableFormatterTest do
   end
 
   test "correct output" do
-    output = capture_io(fn -> TF.print_table_for_columns(sample_data(), headers()) end)
+    output = capture_io(fn -> TF.print_table_for_columns(@sample_data, @headers) end)
 
     assert output == """
            c1    | c2     | c4\s\s\s\s\s
