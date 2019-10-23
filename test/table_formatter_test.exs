@@ -16,9 +16,9 @@ defmodule TableFormatterTest do
 
   def headers, do: [:c1, :c2, :c4]
 
-  def split_in_three_columns, do: TF.split_into_column(sample_data(), headers())
+  def split_in_three_columns, do: TF.split_into_columns(sample_data(), headers())
 
-  test "TableFormatter.split_into_column/2" do
+  test "TableFormatter.split_into_columns/2" do
     columns = split_in_three_columns()
 
     assert length(columns) == length(headers())
@@ -40,12 +40,12 @@ defmodule TableFormatterTest do
     output = capture_io(fn -> TF.print_table_for_columns(sample_data(), headers()) end)
 
     assert output == """
-           c1    | c2     | c4
+           c1    | c2     | c4\s\s\s\s\s
            ------+--------+--------
            r1_c1 | r1_c2  | r1___c4
-           r2_c1 | r2_c2  | r2_c4
-           r3_c1 | r3_c2  | r3_c4
-           r4_c1 | r4__c2 | r4_c4
+           r2_c1 | r2_c2  | r2_c4\s\s
+           r3_c1 | r3_c2  | r3_c4\s\s
+           r4_c1 | r4__c2 | r4_c4\s\s
            """
   end
 end
