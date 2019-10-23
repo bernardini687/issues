@@ -29,11 +29,11 @@ defmodule Issues.TableFormatter do
   end
 
   def format_for(column_widths) do
-    map_join(column_widths, " | ", fn width -> "~-#{width}s" end) <> "~n"
+    map_join(column_widths, " | ", &"~-#{&1}s") <> "~n"
   end
 
   def separator(column_widths) do
-    map_join(column_widths, "-+-", fn width -> List.duplicate("-", width) end)
+    map_join(column_widths, "-+-", &List.duplicate("-", &1))
   end
 
   def puts_in_columns(data_by_columns, format) do
