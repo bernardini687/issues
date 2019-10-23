@@ -2,9 +2,13 @@ defmodule CLITest do
   use ExUnit.Case
 
   import ExUnit.CaptureIO, only: [capture_io: 1]
-  import Issues.CLI, only: [parse_argv: 1,
-                            sort_by_ascending_order: 1,
-                            process: 1]
+
+  import Issues.CLI,
+    only: [
+      parse_argv: 1,
+      sort_by_ascending_order: 1,
+      process: 1
+    ]
 
   test "returns :help if given -h or --help options" do
     assert parse_argv(["-h", "foo"]) == :help
@@ -20,18 +24,20 @@ defmodule CLITest do
   end
 
   test "outputs help" do
-    assert capture_io(fn -> process(:help) end) == "usage: issues <user> <project> [count | 4]\n"
+    output = capture_io(fn -> process(:help) end)
+
+    assert output == "usage: issues <user> <project> [count | 4]\n"
   end
 
   test "sort_by_ascending_orders/1" do
     result =
-      ~w[c b a]
+      ~w(c b a)
       |> fake_created_at_list()
       |> sort_by_ascending_order()
 
     issues = for issue <- result, do: issue[:created_at]
 
-    assert issues == ~w[a b c]
+    assert issues == ~w(a b c)
   end
 
   @tag :skip

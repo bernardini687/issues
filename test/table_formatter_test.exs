@@ -1,6 +1,7 @@
 defmodule TableFormatterTest do
   use ExUnit.Case
-  import ExUnit.CaptureIO
+
+  import ExUnit.CaptureIO, only: [capture_io: 1]
 
   alias Issues.TableFormatter, as: TF
 
@@ -36,10 +37,10 @@ defmodule TableFormatterTest do
   end
 
   test "correct output" do
-    result =
+    output =
       capture_io(fn -> TF.print_table_for_columns(sample_data(), headers()) end)
 
-    assert result == """
+    assert output == """
     c1    | c2     | c4
     ------+--------+--------
     r1_c1 | r1_c2  | r1___c4
