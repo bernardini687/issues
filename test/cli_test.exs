@@ -40,7 +40,7 @@ defmodule CLITest do
     assert issues == ~w(a b c)
   end
 
-  @tag :skip
+  # @tag :skip
   test "successful process" do
     issues = process({"christopheradams", "elixir_style_guide", 3})
 

@@ -21,9 +21,6 @@ defmodule Issues.TableFormatter do
     end
   end
 
-  def printable(string) when is_binary(string), do: string
-  def printable(string), do: to_string(string)
-
   def widths_of(columns) do
     for column <- columns, do: column |> map(&String.length/1) |> max()
   end
@@ -32,18 +29,21 @@ defmodule Issues.TableFormatter do
     map_join(column_widths, " | ", &"~-#{&1}s") <> "~n"
   end
 
-  def separator(column_widths) do
+  defp printable(string) when is_binary(string), do: string
+  defp printable(string), do: to_string(string)
+
+  defp separator(column_widths) do
     map_join(column_widths, "-+-", &List.duplicate("-", &1))
   end
 
-  def puts_in_columns(data_by_columns, format) do
+  defp puts_in_columns(data_by_columns, format) do
     data_by_columns
     |> List.zip()
     |> map(&Tuple.to_list/1)
     |> each(&puts_one_line_in_columns(&1, format))
   end
 
-  def puts_one_line_in_columns(fields, format) do
+  defp puts_one_line_in_columns(fields, format) do
     :io.format(format, fields)
   end
 end
