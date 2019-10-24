@@ -32,8 +32,8 @@ defmodule Issues.TableFormatter do
   ## Example
 
       iex> [
-      ...>   Enum.into([{a: 1}, {b: 2}, {c: 3}], HashDict.new),
-      ...>   Enum.into([{a: 4}, {b: 5}, {c: 6}], HashDict.new)
+      ...>   Enum.into([a: 1, b: 2, c: 3], %{}),
+      ...>   Enum.into([a: 4, b: 5, c: 6], %{})
       ...> ]
       ...> |> Issues.TableFormatter.split_into_columns([:b, :c])
       [["2", "5"], ["3", "6"]]
@@ -82,8 +82,8 @@ defmodule Issues.TableFormatter do
       iex> Issues.TableFormatter.printable(99)
       "99"
   """
-  defp printable(string) when is_binary(string), do: string
-  defp printable(string), do: to_string(string)
+  def printable(string) when is_binary(string), do: string
+  def printable(string), do: to_string(string)
 
   @doc """
   Generate the line that goes below the column headings. It is a string of
@@ -95,11 +95,15 @@ defmodule Issues.TableFormatter do
       iex> Issues.TableFormatter.separator(widths)
       "------+--------+----------"
   """
-  defp separator(column_widths) do
+  def separator(column_widths) do
     map_join(column_widths, "-+-", &List.duplicate("-", &1))
   end
 
-  defp puts_in_columns(data_by_columns, format) do
+  @doc """
+  Given a list containing rows of data, a list containing the header selectors,
+  and a format string, write the extracted data under control of the format string.
+  """
+  def puts_in_columns(data_by_columns, format) do
     data_by_columns
     |> List.zip()
     |> map(&Tuple.to_list/1)

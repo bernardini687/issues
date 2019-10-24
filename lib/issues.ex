@@ -10,7 +10,6 @@ defmodule Issues do
 
       iex> Issues.hello()
       :world
-
   """
   def hello do
     :world
