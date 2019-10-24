@@ -5,9 +5,12 @@ defmodule Issues.CLI do
   table of the last `n` issues in a github repository.
   """
 
-  @default_count 4
+  import Issues.TableFormatter, only: [print_table_for_columns: 2]
 
-  def run(argv) do
+  @default_count 4
+  @headers ~w(number created_at title)a
+
+  def main(argv) do
     argv
     |> parse_argv()
     |> process()
@@ -44,7 +47,7 @@ defmodule Issues.CLI do
 
   def process(:help) do
     IO.puts("usage: issues <user> <project> [count | #{@default_count}]")
-    # System.halt(0)
+    System.halt(0)
   end
 
   def process({user, repo, count}) do
@@ -52,6 +55,7 @@ defmodule Issues.CLI do
     |> decode_response()
     |> sort_by_ascending_order()
     |> Enum.take(count)
+    |> print_table_for_columns(@headers)
   end
 
   def decode_response({:ok, body}), do: body
